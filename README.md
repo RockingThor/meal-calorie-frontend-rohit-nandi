@@ -1,61 +1,121 @@
 # NutriTrack - Meal Calorie Counter
 
-A modern, responsive web application for tracking meal calories using USDA FoodData Central. Built with Next.js 14, TypeScript, Tailwind CSS, and shadcn/ui.
+A modern, responsive web application for tracking meal calories using USDA FoodData Central.
 
 ![NutriTrack Screenshot](./screenshot.png)
 
-## Features
+## Live Demo
 
-- **User Authentication** - Secure registration and login with JWT tokens
-- **Calorie Lookup** - Search any dish to get accurate calorie information
-- **Meal History** - Track and view your past calorie searches
-- **Dark/Light Mode** - Beautiful theme toggle with system preference support
-- **Responsive Design** - Mobile-first layout that works on all devices
-- **Real-time Feedback** - Loading states, success notifications, and error handling
+🌐 **Hosted App**: [https://meal-calorie-frontend-rohit-nandi.vercel.app](https://meal-calorie-frontend-rohit-nandi.vercel.app)
+
+---
 
 ## Tech Stack
 
-| Layer | Technology |
-|-------|------------|
-| Framework | Next.js 14 (App Router) |
-| Language | TypeScript |
-| Styling | Tailwind CSS + shadcn/ui |
-| State Management | Zustand (with persistence) |
-| Data Fetching | Axios + TanStack React Query |
-| Forms | react-hook-form + Zod |
-| Package Manager | pnpm |
+| Layer            | Technology                     |
+| ---------------- | ------------------------------ |
+| Framework        | Next.js 14 (App Router)        |
+| Language         | TypeScript                     |
+| Styling          | Tailwind CSS + shadcn/ui       |
+| State Management | Zustand (with persistence)     |
+| Data Fetching    | Axios + TanStack React Query   |
+| Forms            | react-hook-form + Zod          |
+| Package Manager  | pnpm                           |
 
-## Getting Started
+---
+
+## Setup Instructions
 
 ### Prerequisites
 
-- Node.js 18+ 
+- Node.js 18+
 - pnpm (recommended) or npm
 
 ### Installation
 
-1. Clone the repository:
+1. **Clone the repository:**
+
+   ```bash
+   git clone https://github.com/yourusername/calorie-tracking-app.git
+   cd calorie-tracking-app
+   ```
+
+2. **Install dependencies:**
+
+   ```bash
+   pnpm install
+   ```
+
+3. **Configure environment variables:**
+
+   ```bash
+   cp .env.example .env.local
+   ```
+
+   Edit `.env.local` and update the API URL if needed.
+
+4. **Start the development server:**
+
+   ```bash
+   pnpm dev
+   ```
+
+5. **Open the app:**
+
+   Visit [http://localhost:3000](http://localhost:3000) in your browser.
+
+### Available Scripts
+
 ```bash
-git clone https://github.com/yourusername/meal-calorie-frontend.git
-cd meal-calorie-frontend
+pnpm dev      # Start development server
+pnpm build    # Build for production
+pnpm start    # Start production server
+pnpm lint     # Run ESLint
+pnpm test     # Run tests
 ```
 
-2. Install dependencies:
-```bash
-pnpm install
-```
+---
 
-3. Create environment file:
-```bash
-cp .env.example .env.local
-```
+## Decisions & Trade-offs
 
-4. Start the development server:
-```bash
-pnpm dev
-```
+### Architecture Decisions
 
-5. Open [http://localhost:3000](http://localhost:3000) in your browser.
+1. **Client-Side State with Zustand**
+   - Chose Zustand over Redux for simpler boilerplate and better TypeScript inference
+   - State is persisted to localStorage for offline support and session continuity
+
+2. **React Query for Server State**
+   - Separates server state from client state
+   - Provides automatic caching, background refetching, and optimistic updates
+   - Reduces manual loading/error state management
+
+3. **JWT Storage in localStorage**
+   - Trade-off: Less secure than httpOnly cookies, but simpler implementation
+   - Benefit: Works seamlessly with Zustand persistence and allows easy token access for API calls
+
+4. **Form Handling with react-hook-form + Zod**
+   - Uncontrolled inputs for better performance
+   - Zod provides runtime validation with TypeScript type inference
+
+5. **Client-Side Route Protection**
+   - Uses `useAuthGuard` hook for protected routes
+   - Trade-off: Initial flash possible before redirect; could be improved with middleware
+
+### UI/UX Decisions
+
+1. **shadcn/ui Components**
+   - Copy-paste component library allows full customization
+   - Consistent design system with accessible components out of the box
+
+2. **Dark/Light Theme Support**
+   - Uses next-themes with system preference detection
+   - Persists user preference across sessions
+
+3. **Mobile-First Responsive Design**
+   - All components designed for mobile first, then scaled up
+   - Ensures good UX across all device sizes
+
+---
 
 ## Project Structure
 
@@ -93,53 +153,3 @@ pnpm dev
   /types
     index.ts            # TypeScript interfaces
 ```
-
-## API Endpoints
-
-The application connects to the following backend API:
-
-| Endpoint | Method | Auth | Description |
-|----------|--------|------|-------------|
-| `/auth/register` | POST | No | Register new user |
-| `/auth/login` | POST | No | User login |
-| `/get-calories` | POST | JWT | Get calorie info |
-
-## Design Decisions
-
-1. **JWT Storage**: Stored in Zustand with localStorage persistence for simplicity and offline support
-2. **React Query**: Used for server state management with automatic caching and refetching
-3. **Form Handling**: react-hook-form for performance + Zod for type-safe validation
-4. **Protected Routes**: Client-side guard via `useAuthGuard` hook with redirect to login
-5. **Theme**: next-themes with shadcn's built-in dark mode support
-
-## Environment Variables
-
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `NEXT_PUBLIC_API_BASE_URL` | Backend API URL | `https://flybackend-misty-feather-6458.fly.dev` |
-
-## Scripts
-
-```bash
-# Development
-pnpm dev          # Start development server
-
-# Build
-pnpm build        # Build for production
-pnpm start        # Start production server
-
-# Linting
-pnpm lint         # Run ESLint
-```
-
-## Deployment
-
-This app is ready to deploy on Vercel:
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/yourusername/meal-calorie-frontend)
-
-1. Push your code to GitHub
-2. Import the repository on Vercel
-3. Add environment variables
-4. Deploy!
-
