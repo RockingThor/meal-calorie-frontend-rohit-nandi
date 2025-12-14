@@ -1,36 +1,145 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# NutriTrack - Meal Calorie Counter
+
+A modern, responsive web application for tracking meal calories using USDA FoodData Central. Built with Next.js 14, TypeScript, Tailwind CSS, and shadcn/ui.
+
+![NutriTrack Screenshot](./screenshot.png)
+
+## Features
+
+- **User Authentication** - Secure registration and login with JWT tokens
+- **Calorie Lookup** - Search any dish to get accurate calorie information
+- **Meal History** - Track and view your past calorie searches
+- **Dark/Light Mode** - Beautiful theme toggle with system preference support
+- **Responsive Design** - Mobile-first layout that works on all devices
+- **Real-time Feedback** - Loading states, success notifications, and error handling
+
+## Tech Stack
+
+| Layer | Technology |
+|-------|------------|
+| Framework | Next.js 14 (App Router) |
+| Language | TypeScript |
+| Styling | Tailwind CSS + shadcn/ui |
+| State Management | Zustand (with persistence) |
+| Data Fetching | Axios + TanStack React Query |
+| Forms | react-hook-form + Zod |
+| Package Manager | pnpm |
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
+- Node.js 18+ 
+- pnpm (recommended) or npm
+
+### Installation
+
+1. Clone the repository:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/yourusername/meal-calorie-frontend.git
+cd meal-calorie-frontend
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies:
+```bash
+pnpm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Create environment file:
+```bash
+cp .env.example .env.local
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Start the development server:
+```bash
+pnpm dev
+```
 
-## Learn More
+5. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-To learn more about Next.js, take a look at the following resources:
+## Project Structure
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+/src
+  /app
+    layout.tsx          # Root layout with providers
+    page.tsx            # Landing page
+    /login              # Login page
+    /register           # Registration page
+    /dashboard          # Protected dashboard
+    /calories           # Calorie lookup page
+  /components
+    /ui                 # shadcn/ui components
+    /providers          # React context providers
+    AuthForm.tsx        # Auth form component
+    MealForm.tsx        # Calorie lookup form
+    ResultCard.tsx      # Display calorie results
+    MealHistory.tsx     # History table
+    Navbar.tsx          # Navigation with theme toggle
+  /hooks
+    useAuth.ts          # Authentication hooks
+    useAuthGuard.ts     # Route protection hook
+    useCalories.ts      # Calorie API hooks
+  /lib
+    api.ts              # Axios instance
+    auth.ts             # Auth utilities
+    utils.ts            # Utility functions
+  /schemas
+    auth.schema.ts      # Zod validation schemas
+    meal.schema.ts
+  /stores
+    authStore.ts        # Auth state (Zustand)
+    mealStore.ts        # Meal history state
+  /types
+    index.ts            # TypeScript interfaces
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## API Endpoints
 
-## Deploy on Vercel
+The application connects to the following backend API:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+| Endpoint | Method | Auth | Description |
+|----------|--------|------|-------------|
+| `/auth/register` | POST | No | Register new user |
+| `/auth/login` | POST | No | User login |
+| `/get-calories` | POST | JWT | Get calorie info |
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Design Decisions
+
+1. **JWT Storage**: Stored in Zustand with localStorage persistence for simplicity and offline support
+2. **React Query**: Used for server state management with automatic caching and refetching
+3. **Form Handling**: react-hook-form for performance + Zod for type-safe validation
+4. **Protected Routes**: Client-side guard via `useAuthGuard` hook with redirect to login
+5. **Theme**: next-themes with shadcn's built-in dark mode support
+
+## Environment Variables
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `NEXT_PUBLIC_API_BASE_URL` | Backend API URL | `https://flybackend-misty-feather-6458.fly.dev` |
+
+## Scripts
+
+```bash
+# Development
+pnpm dev          # Start development server
+
+# Build
+pnpm build        # Build for production
+pnpm start        # Start production server
+
+# Linting
+pnpm lint         # Run ESLint
+```
+
+## Deployment
+
+This app is ready to deploy on Vercel:
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/yourusername/meal-calorie-frontend)
+
+1. Push your code to GitHub
+2. Import the repository on Vercel
+3. Add environment variables
+4. Deploy!
+
