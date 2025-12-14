@@ -18,9 +18,7 @@ export function useLogin() {
       const user = decodeToken(data.token);
       if (user) {
         setAuth(data.token, user);
-        toast.success("Welcome back!", {
-          description: `Logged in as ${user.firstName}`,
-        });
+        toast.success("Welcome back!");
         router.push("/dashboard");
       }
     },

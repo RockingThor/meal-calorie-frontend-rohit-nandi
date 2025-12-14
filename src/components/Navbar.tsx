@@ -28,10 +28,7 @@ export function Navbar() {
   ];
 
   const getInitials = () => {
-    if (!user) return "U";
-    return `${user.firstName?.[0] || ""}${
-      user.lastName?.[0] || ""
-    }`.toUpperCase();
+    return "U";
   };
 
   return (

@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { Navbar } from "@/components/Navbar";
-import { useAuthStore } from "@/stores/authStore";
 import { useMealStore } from "@/stores/mealStore";
 import { Button } from "@/components/ui/button";
 import {
@@ -24,7 +23,6 @@ import {
 } from "lucide-react";
 
 export function DashboardContent() {
-  const user = useAuthStore((state) => state.user);
   const history = useMealStore((state) => state.history);
 
   // Calculate stats
@@ -86,7 +84,7 @@ export function DashboardContent() {
           {/* Welcome Section */}
           <div className="mb-8">
             <h1 className="text-3xl font-bold tracking-tight">
-              Welcome back, {user?.firstName}! 👋
+              Welcome back! 👋
             </h1>
             <p className="text-muted-foreground mt-1">
               Here&apos;s an overview of your calorie tracking activity
