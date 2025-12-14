@@ -2,7 +2,10 @@
 
 A modern, responsive web application for tracking meal calories using USDA FoodData Central.
 
-![NutriTrack Screenshot](./screenshot.png)
+# NutriTrack Screenshot
+<img width="1512" height="982" alt="Screenshot 2025-12-14 at 10 44 04 AM" src="https://github.com/user-attachments/assets/ad0c7741-ca2f-4fda-a397-d3b5ff06843e" />
+
+<img width="1512" height="982" alt="Screenshot 2025-12-14 at 10 45 09 AM" src="https://github.com/user-attachments/assets/fbe960e6-334a-41c6-9c12-d367e88e36cc" />
 
 ## Live Demo
 
